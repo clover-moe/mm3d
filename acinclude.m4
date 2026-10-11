@@ -463,6 +463,8 @@ AC_DEFUN([BNV_HAVE_QT],
                           Qt header files are in DIR])
   AC_ARG_WITH([Qt-bin-dir],
     [  --with-Qt-bin-dir=DIR   Qt utilities such as moc and uic are in DIR])
+  AC_ARG_WITH([Qt-linguist-bin-dir],
+    [  --with-Qt-linguist-bin-dir=DIR   Qt utilities lrelease, lconvert, and lupdate are in DIR])
   AC_ARG_WITH([Qt-lib-dir],
     [  --with-Qt-lib-dir=DIR   The Qt library is in DIR])
   AC_ARG_WITH([Qt-translations-dir],
@@ -477,6 +479,7 @@ AC_DEFUN([BNV_HAVE_QT],
   if test x"$with_Qt_dir" = x"no" ||
      test x"$with_Qt_include_dir" = x"no" ||
      test x"$with_Qt_bin_dir" = x"no" ||
+     test x"$with_Qt_linguist_bin_dir" = x"no" ||
      test x"$with_Qt_lib_dir" = x"no" ||
      test x"$with_Qt_translations_dir" = x"no"; then
     # user disabled Qt. Leave cache alone.
@@ -492,6 +495,9 @@ AC_DEFUN([BNV_HAVE_QT],
     if test x"$with_Qt_bin_dir" = xyes; then
       with_Qt_bin_dir=
     fi
+    if test x"$with_Qt_linguist_bin_dir" = xyes; then
+      with_Qt_linguist_bin_dir=
+    fi
     if test x"$with_Qt_lib_dir" = xyes; then
       with_Qt_lib_dir=
     fi
@@ -506,6 +512,7 @@ AC_DEFUN([BNV_HAVE_QT],
       bnv_qt_dir="$with_Qt_dir"
       bnv_qt_include_dir="$with_Qt_dir/include"
       bnv_qt_bin_dir="$with_Qt_dir/bin"
+      bnv_qt_linguist_bin_dir="$with_Qt_dir/bin"
       if test -d "$with_Qt_dir/lib64" ; then
         bnv_qt_lib_dir="$with_Qt_dir/lib64"
       else
@@ -539,6 +546,7 @@ AC_DEFUN([BNV_HAVE_QT],
                        bnv_qt_dir=$bnv_qt_dir          \
                bnv_qt_include_dir=$bnv_qt_include_dir  \
                    bnv_qt_bin_dir=$bnv_qt_bin_dir      \
+                   bnv_qt_linguist_bin_dir=$bnv_qt_linguist_bin_dir \
           bnv_qt_translations_dir=$bnv_qt_translations_dir \
                    bnv_is_qt5=$bnv_is_qt5              \
                       bnv_qt_LIBS=\"$bnv_qt_LIBS\""
@@ -571,12 +579,12 @@ AC_DEFUN([BNV_HAVE_QT],
         QT_RCC="$bnv_qt_bin_dir/rcc"
       fi
       # LRELEASE detection
-      if test -x "$bnv_qt_bin_dir/lrelease"; then
-        QT_LRELEASE="$bnv_qt_bin_dir/lrelease"
+      if test -x "$bnv_qt_linguist_bin_dir/lrelease"; then
+        QT_LRELEASE="$bnv_qt_linguist_bin_dir/lrelease"
       fi
       # LCONVERT detection
-      if test -x "$bnv_qt_bin_dir/lconvert"; then
-        QT_LCONVERT="$bnv_qt_bin_dir/lconvert"
+      if test -x "$bnv_qt_linguist_bin_dir/lconvert"; then
+        QT_LCONVERT="$bnv_qt_linguist_bin_dir/lconvert"
       fi
       # MACDEPLOYQT detection
       if test -x "$bnv_qt_bin_dir/macdeployqt"; then
@@ -958,6 +966,10 @@ AC_DEFUN([BNV_PATH_QT_DIRECT],
   if test x"$with_Qt_bin_dir" != x; then
     bnv_qt_bin_dir=$with_Qt_bin_dir
   fi
+  if test x"$with_Qt_linguist_bin_dir" != x; then
+    bnv_qt_linguist_bin_dir=$with_Qt_linguist_bin_dir
+  fi
+
   ## Look for header files ##
   if test x"$with_Qt_include_dir" != x; then
     bnv_qt_include_dir="$with_Qt_include_dir"
